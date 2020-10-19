@@ -134,12 +134,15 @@ namespace TableShifr
             string str = Console.ReadLine();
             Console.Write("Введите ключ: ");
             string key = Console.ReadLine();
+            str = str.ToUpper();
+            key = key.ToUpper();
             double temp = (double)str.Length / (double)key.Length;
             if ((double)temp != (int)temp)
             {
                 Console.WriteLine("Строку невозможно записать в таблицу.\n\n\n");
                 return;
             }
+            #region Keyword horizontal
             char[,] arr = new char[str.Length / key.Length, key.Length];
             int l = 0;
             for (int i = 0; i < arr.GetLength(1); i++)
@@ -158,15 +161,55 @@ namespace TableShifr
                 }
                 Console.WriteLine();
             }
-            for (int i = 0; i < arr.GetLength(1); i++)
+            char[] tempp = new char[arr.GetLength(1)];
+            for (int i = 0; i < tempp.Length; i++)
+            {
+                tempp[i] = arr[0, i];
+            }
+            for (int i = 0; i < key.Length; i++)
+            {
+                int n = IndexOf(tempp, key[i],i);
+                Switch(ref arr, i, n);
+                char t = tempp[i];
+                tempp[i] = tempp[n];
+                tempp[n] = t;
+            }
+            Console.WriteLine("Вторая таблица:");
+            for (int i = 0; i < arr.GetLength(0); i++)
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
                 {
-
+                    Console.Write(arr[i, j] + " ");
                 }
-
+                Console.WriteLine();
             }
-
+            char[] res = new char[arr.Length];
+            l = 0;
+            for (int i = 1; i < arr.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+                    res[l++] = arr[i, j];
+                }
+            }
+            Console.Write("Открытый текст: ");
+            for (int i = 0; i < res.Length; i++)
+            {
+                Console.Write(res[i]);
+            }
+            Console.WriteLine();
+            #endregion
+        }
+        static int IndexOf(char[] arr, char a, int j)
+        {
+            for (int i = j; i < arr.Length; i++)
+            {
+                if (arr[i] == a)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 }
