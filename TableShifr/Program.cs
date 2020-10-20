@@ -36,7 +36,7 @@ namespace TableShifr
             string str = Console.ReadLine();
             Console.Write("Введите ключ: ");
             string key = Console.ReadLine();
-            char[,] arr = new char[str.Length / key.Length + 2, key.Length];
+            char[,] arr = new char[str.Length / key.Length + (((int)str.Length / key.Length == (double)str.Length / key.Length) ? 1 : 2), key.Length];
             int l = 0, L=0;
             for (int i = 0; i < arr.GetLength(0); i++)
             {
